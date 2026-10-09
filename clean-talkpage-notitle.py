@@ -51,6 +51,7 @@ def main():
         print("Failed to load config.")
         return
     pageprocess = lambda x : pattern.sub(replacement, x)
+    t = 0
     for page in site.search(query, namespaces=namespaces, content=True):
         success = save(site, page, pageprocess, summary)
         if success:
