@@ -1,13 +1,13 @@
 import re, json, pywikibot
 
-def save(site, page, func = lambda x:x, summary:str = "", max_retry_times:int = 3, **kargs) -> bool:
+def save(site, page, func = lambda x:x, summary:str = "", max_retry_times:int = 3) -> bool:
     if page.exists() and page.botMayEdit():
         original_text = page.text
     else:
       return False
     for _ in range(max_retry_times):
         try:
-            page.text = func(original_text, **kargs)
+            page.text = func(original_text)
             if page.text != original_text:
                 page.save(summary, minor = True, bot=True)
                 return True
@@ -57,7 +57,7 @@ def main():
             t += 1
             if t % 10 == 0:
                 try:
-                    config = json.loads(pywikibot.Page(site, "User:Twelephant-bot/task/6/config.json").text)
+                    config = json.loads(pywikibot.Page(site, "User:Twelephant-bot/task/7/config.json").text)
                     if not config["Enable"]:
                         print("Stop.")
                         return
